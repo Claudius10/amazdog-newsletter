@@ -1,13 +1,10 @@
-package com.amazdog.amazdognewsletterapi.controllers;
+package com.amazdog.amazdognewsletterapi.controllers.user;
 
 import com.amazdog.amazdognewsletterapi.entities.dtos.RegisterDTO;
-import com.amazdog.amazdognewsletterapi.entities.user.User;
 import com.amazdog.amazdognewsletterapi.services.users.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user")

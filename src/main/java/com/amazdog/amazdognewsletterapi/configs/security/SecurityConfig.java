@@ -24,14 +24,14 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
 	private final JWTUtils jwtUtils;
+
 	private final OAuth2AccessDeniedHandler restAccessDeniedHandler;
+
 	private final OAuth2AuthEntryPoint restAuthenticationEntryPoint;
 
 	private final ValidAuthHandler validAuthHandler;
 
 	private final InvalidAuthHandler invalidAuthHandler;
-
-	// TODO - feature: change role of registered users
 
 	public SecurityConfig
 			(JWTUtils jwtUtils,
@@ -63,6 +63,7 @@ public class SecurityConfig {
 		// endpoints config
 		httpSecurity.authorizeHttpRequests(auth -> {
 			auth.requestMatchers("/api/user/**").permitAll();
+			auth.requestMatchers("/api/admin/**").hasRole("ADMIN");
 			auth.requestMatchers("/api/post/**").hasAnyRole("ADMIN, EDITOR");
 			auth.requestMatchers("/api/statistic/**").hasAnyRole("ADMIN, EDITOR");
 			auth.anyRequest().authenticated();

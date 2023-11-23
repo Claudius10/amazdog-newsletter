@@ -20,7 +20,6 @@ public class ValidAuthHandler implements AuthenticationSuccessHandler {
 		this.tokenUtils = tokenUtils;
 	}
 
-
 	@Override
 	public void onAuthenticationSuccess
 			(HttpServletRequest request,
@@ -30,7 +29,7 @@ public class ValidAuthHandler implements AuthenticationSuccessHandler {
 		User user = (User) authentication.getPrincipal();
 
 		String accessToken = tokenUtils.createToken(
-				Instant.now().plus(1, ChronoUnit.SECONDS),
+				Instant.now().plus(1, ChronoUnit.SECONDS), // NOTE - set correct expiry for prod
 				user.getUsername(),
 				user.getId(),
 				user.getAuthorities());
