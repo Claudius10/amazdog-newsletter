@@ -28,7 +28,7 @@ public class AdminController {
 	public ResponseEntity<?> findUserDTOByEmail(@RequestParam String userEmail) {
 		Optional<UserDTO> userDTO = userService.findDTOByEmail(userEmail);
 		if (userDTO.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No hay resultados para usuario con email " + userEmail);
+			return ResponseEntity.status(HttpStatus.OK).body("No hay resultados para usuario con email " + userEmail);
 		} else {
 			return ResponseEntity.status(HttpStatus.OK).body(userDTO);
 		}
@@ -41,5 +41,4 @@ public class AdminController {
 			 @RequestParam boolean add) {
 		return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserRole(userId, roleName, add));
 	}
-
 }

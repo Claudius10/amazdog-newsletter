@@ -62,7 +62,8 @@ public class SecurityConfig {
 
 		// endpoints config
 		httpSecurity.authorizeHttpRequests(auth -> {
-			auth.requestMatchers("/api/user/**").permitAll();
+			auth.requestMatchers("/api/anon/user/**").permitAll();
+			auth.requestMatchers("/api/user/**").hasRole("USUARIO");
 			auth.requestMatchers("/api/admin/**").hasRole("ADMIN");
 			auth.requestMatchers("/api/post/**").hasAnyRole("ADMIN, EDITOR");
 			auth.requestMatchers("/api/statistic/**").hasAnyRole("ADMIN, EDITOR");

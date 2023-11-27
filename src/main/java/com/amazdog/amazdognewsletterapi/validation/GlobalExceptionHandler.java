@@ -1,5 +1,6 @@
 package com.amazdog.amazdognewsletterapi.validation;
 
+import com.amazdog.amazdognewsletterapi.validation.exceptions.InvalidPasswordException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -47,7 +48,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 						.build());
 	}
 
-	@ExceptionHandler({AuthenticationException.class, AccessDeniedException.class})
+	@ExceptionHandler({AuthenticationException.class, AccessDeniedException.class, InvalidPasswordException.class})
 	protected ResponseEntity<ApiErrorDTO> handleAuthenticationExceptions(HttpServletRequest request, RuntimeException ex) {
 
 		String errorMsg;

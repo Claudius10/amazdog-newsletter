@@ -1,11 +1,11 @@
 package com.amazdog.amazdognewsletterapi.services.users;
 
-import com.amazdog.amazdognewsletterapi.entities.dtos.RegisterDTO;
-import com.amazdog.amazdognewsletterapi.entities.dtos.UserDTO;
+import com.amazdog.amazdognewsletterapi.entities.dtos.*;
 import com.amazdog.amazdognewsletterapi.entities.user.Role;
 import com.amazdog.amazdognewsletterapi.entities.user.User;
 import com.amazdog.amazdognewsletterapi.repos.users.UserRepository;
 import com.amazdog.amazdognewsletterapi.services.role.RoleService;
+import com.amazdog.amazdognewsletterapi.validation.exceptions.InvalidPasswordException;
 import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,6 +32,8 @@ public class UserServiceImpl implements UserService {
 		this.bCryptEncoder = bCryptEncoder;
 	}
 
+	// info - for anon user
+
 	@Override
 	public void create(RegisterDTO registerDTO) {
 		Role userRole = roleService.findByName("USUARIO").get();
@@ -48,6 +50,35 @@ public class UserServiceImpl implements UserService {
 
 		userRepository.save(user);
 	}
+
+	// info - for user role
+
+	@Override
+	public void updateName(Long userId, NameChangeDTO nameChangeDTO) {
+		verifyPassword(userId, nameChangeDTO.password());
+		userRepository.updateName(userId, nameChangeDTO.name());
+	}
+
+	@Override
+	public void updateEmail(Long userId, EmailChangeDTO emailChangeDTO) {
+		verifyPassword(userId, emailChangeDTO.password());
+		userRepository.updateEmail(userId, emailChangeDTO.email());
+	}
+
+	@Override
+	public void updatePassword(Long userId, PasswordChangeDTO passwordChangeDTO) {
+		verifyPassword(userId, passwordChangeDTO.currentPassword());
+		String encodedPassword = bCryptEncoder.encode(passwordChangeDTO.newPassword());
+		userRepository.updatePassword(userId, encodedPassword);
+	}
+
+	@Override
+	public void deleteAccount(Long userId, String password) {
+		verifyPassword(userId, password);
+		userRepository.deleteById(userId);
+	}
+
+	// info - for admin role
 
 	@Override
 	public Optional<User> findById(Long id) {
@@ -94,4 +125,16 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	// info - util method
+
+	@Override
+	public String loadPassword(Long userId) {
+		return userRepository.loadPassword(userId);
+	}
+
+	private void verifyPassword(Long userId, String password) {
+		if (!bCryptEncoder.matches(password, loadPassword(userId))) {
+			throw new InvalidPasswordException("La contraseña proporcionada no coincide con la contraseña almacenada");
+		}
+	}
 }
