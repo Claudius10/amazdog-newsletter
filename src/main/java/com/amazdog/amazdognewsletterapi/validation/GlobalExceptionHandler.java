@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -54,6 +55,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		String errorMsg;
 		if (ex instanceof BadCredentialsException) {
 			errorMsg = "Email o contraseña incorrecta";
+		} else if (ex instanceof DisabledException) {
+			errorMsg = "La cuenta no está activada. Compruebe su email para el enlace de activación.";
 		} else {
 			errorMsg = ex.getMessage();
 		}

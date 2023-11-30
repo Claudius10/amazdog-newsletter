@@ -1,15 +1,14 @@
 package com.amazdog.amazdognewsletterapi.controllers.user;
 
+import com.amazdog.amazdognewsletterapi.entities.dtos.PasswordResetDTO;
 import com.amazdog.amazdognewsletterapi.entities.dtos.RegisterDTO;
 import com.amazdog.amazdognewsletterapi.services.users.UserService;
+import com.amazdog.amazdognewsletterapi.utils.mailsender.UserMailSender;
 import jakarta.validation.Valid;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/anon/user")
@@ -17,12 +16,15 @@ public class AnonUserController {
 
 	private final UserService userService;
 
-	public AnonUserController(UserService userService) {
+	private final UserMailSender userMailSender;
+
+	public AnonUserController(UserService userService, UserMailSender userMailSender) {
 		this.userService = userService;
+		this.userMailSender = userMailSender;
 	}
 
 	@PostMapping
-	public ResponseEntity<?> registerUser(@RequestBody @Valid RegisterDTO registerDTO) {
+	public ResponseEntity<String> registerUser(@RequestBody @Valid RegisterDTO registerDTO) {
 		try {
 			userService.create(registerDTO);
 		} catch (DataIntegrityViolationException ex) {
@@ -31,5 +33,23 @@ public class AnonUserController {
 		return ResponseEntity.status(HttpStatus.OK).body("Usuario registrado con éxito");
 	}
 
-	// TODO -- pw reset
+	@PostMapping(params = "activationToken")
+	public ResponseEntity<String> activateUserAccount(@RequestParam String activationToken) {
+		return ResponseEntity.status(HttpStatus.OK).body(userService.activateAccount(activationToken));
+	}
+
+	@PostMapping(path = "/password", params = "resetFor")
+	public ResponseEntity<String> requestPwReset(@RequestParam String resetFor) {
+		userMailSender.sendPwResetEmail(resetFor);
+		return ResponseEntity.status(HttpStatus.OK).body("Siga el enlace recibido en su email para cambiar la contraseña");
+	}
+
+	@PostMapping(path = "/password", params = "resetToken")
+	public ResponseEntity<String> resetUserPw
+			(@RequestParam String resetToken,
+			 @RequestBody @Valid PasswordResetDTO passwordResetDTO) {
+		userService.passwordReset(resetToken, passwordResetDTO);
+		return ResponseEntity.status(HttpStatus.OK).body("Contraseña cambiada con éxito");
+	}
+
 }

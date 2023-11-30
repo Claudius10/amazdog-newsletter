@@ -28,8 +28,8 @@ public class AmazdogNewsletterApiApplication {
 				roleService.create("EDITOR");
 				userService.create(new RegisterDTO(
 						"Clau",
-						"clau@gmail.com",
-						"clau@gmail.com",
+						"zotacfl@gmail.com",
+						"zotacfl@gmail.com",
 						"password",
 						"password"));
 			}

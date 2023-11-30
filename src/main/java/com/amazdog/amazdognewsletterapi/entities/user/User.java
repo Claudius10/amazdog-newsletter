@@ -24,6 +24,9 @@ public class User implements UserDetails {
 	@Column(nullable = false)
 	private String password;
 
+	@Column(nullable = false)
+	private boolean isEnabled;
+
 	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "users_roles",
 			joinColumns = @JoinColumn(name = "user_id"),
@@ -38,6 +41,7 @@ public class User implements UserDetails {
 		this.email = builder.email;
 		this.password = builder.password;
 		this.roles = builder.roles;
+		this.isEnabled = false;
 	}
 
 	public Long getId() {
@@ -64,6 +68,11 @@ public class User implements UserDetails {
 	}
 
 	@Override
+	public boolean isEnabled() {
+		return this.isEnabled;
+	}
+
+	@Override
 	public boolean isAccountNonExpired() {
 		return true;
 	}
@@ -75,11 +84,6 @@ public class User implements UserDetails {
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
 		return true;
 	}
 

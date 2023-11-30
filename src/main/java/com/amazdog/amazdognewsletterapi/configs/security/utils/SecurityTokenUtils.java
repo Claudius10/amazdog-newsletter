@@ -10,11 +10,11 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Component
-public class TokenUtils {
+public class SecurityTokenUtils {
 
 	private final JWTUtils jwtUtils;
 
-	public TokenUtils(JWTUtils jwtUtils) {
+	public SecurityTokenUtils(JWTUtils jwtUtils) {
 		this.jwtUtils = jwtUtils;
 	}
 

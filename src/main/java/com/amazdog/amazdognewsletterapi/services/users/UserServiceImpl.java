@@ -1,15 +1,21 @@
 package com.amazdog.amazdognewsletterapi.services.users;
 
+import com.amazdog.amazdognewsletterapi.entities.Token;
 import com.amazdog.amazdognewsletterapi.entities.dtos.*;
 import com.amazdog.amazdognewsletterapi.entities.user.Role;
 import com.amazdog.amazdognewsletterapi.entities.user.User;
 import com.amazdog.amazdognewsletterapi.repos.users.UserRepository;
 import com.amazdog.amazdognewsletterapi.services.role.RoleService;
+import com.amazdog.amazdognewsletterapi.services.token.TokenService;
+import com.amazdog.amazdognewsletterapi.utils.TokenUtils;
+import com.amazdog.amazdognewsletterapi.utils.mailsender.UserMailSender;
 import com.amazdog.amazdognewsletterapi.validation.exceptions.InvalidPasswordException;
 import jakarta.transaction.Transactional;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,14 +27,25 @@ public class UserServiceImpl implements UserService {
 
 	private final RoleService roleService;
 
+	private final TokenService tokenService;
+
+	private final UserMailSender userMailSender;
+
+	private final TokenUtils tokenUtils;
+
 	private final PasswordEncoder bCryptEncoder;
 
 	public UserServiceImpl
 			(UserRepository userRepository,
 			 RoleService roleService,
+			 TokenService tokenService, UserMailSender userMailSender,
+			 TokenUtils tokenUtils,
 			 PasswordEncoder bCryptEncoder) {
 		this.userRepository = userRepository;
 		this.roleService = roleService;
+		this.tokenService = tokenService;
+		this.userMailSender = userMailSender;
+		this.tokenUtils = tokenUtils;
 		this.bCryptEncoder = bCryptEncoder;
 	}
 
@@ -49,6 +66,20 @@ public class UserServiceImpl implements UserService {
 				.build();
 
 		userRepository.save(user);
+		userMailSender.sendActivationEmail(registerDTO.email());
+	}
+
+	@Override
+	public String activateAccount(String serializedToken) {
+		Token activationToken = tokenUtils.decodeToken(serializedToken);
+
+		if (LocalDateTime.now().isAfter(activationToken.getExpiresOn())) {
+			userMailSender.sendActivationEmail(activationToken.getRecipient());
+			return "El enlace de activación caducó. Recibirá uno nuevo en breve";
+		} else {
+			userRepository.enableAccount(activationToken.getRecipient());
+			return "Cuenta activada con éxito";
+		}
 	}
 
 	// info - for user role
@@ -76,6 +107,18 @@ public class UserServiceImpl implements UserService {
 	public void deleteAccount(Long userId, String password) {
 		verifyPassword(userId, password);
 		userRepository.deleteById(userId);
+	}
+
+	@Override
+	public void passwordReset(String resetToken, PasswordResetDTO passwordResetDTO) {
+		Token pwResetToken = tokenUtils.decodeToken(resetToken);
+		if (tokenService.tokenExists(pwResetToken.getId())) {
+			String encodedPassword = bCryptEncoder.encode(passwordResetDTO.newPassword());
+			userRepository.resetPassword(pwResetToken.getRecipient(), encodedPassword);
+			tokenService.deleteToken(pwResetToken.getId());
+		} else {
+			throw new AccessDeniedException("Access Denied: fraudulent token");
+		}
 	}
 
 	// info - for admin role

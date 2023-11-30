@@ -1,6 +1,6 @@
 package com.amazdog.amazdognewsletterapi.configs.security.login;
 
-import com.amazdog.amazdognewsletterapi.configs.security.utils.TokenUtils;
+import com.amazdog.amazdognewsletterapi.configs.security.utils.SecurityTokenUtils;
 import com.amazdog.amazdognewsletterapi.entities.user.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,9 +14,9 @@ import java.time.temporal.ChronoUnit;
 @Component
 public class ValidAuthHandler implements AuthenticationSuccessHandler {
 
-	private final TokenUtils tokenUtils;
+	private final SecurityTokenUtils tokenUtils;
 
-	public ValidAuthHandler(TokenUtils tokenUtils) {
+	public ValidAuthHandler(SecurityTokenUtils tokenUtils) {
 		this.tokenUtils = tokenUtils;
 	}
 

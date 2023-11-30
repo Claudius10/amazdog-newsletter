@@ -12,6 +12,8 @@ public interface UserService {
 
 	void create(RegisterDTO registerDTO);
 
+	String activateAccount(String activationToken);
+
 	// info - for user role
 
 	void updateName(Long userId, NameChangeDTO nameChangeDTO);
@@ -21,6 +23,8 @@ public interface UserService {
 	void updatePassword(Long userId, PasswordChangeDTO passwordChangeDTO);
 
 	void deleteAccount(Long userId, String password);
+
+	void passwordReset(String resetToken, PasswordResetDTO passwordResetDTO);
 
 	// info - for admin role
 
