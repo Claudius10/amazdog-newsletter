@@ -24,6 +24,10 @@ public class Statistic {
 	@Size(min = 1, max = 255, message = "la longitud debe estar entre 1 y 255 caracteres")
 	private String subject;
 
+	@Column
+	@Size(min = 1, max = 255, message = "la longitud debe estar entre 1 y 255 caracteres")
+	private String label;
+
 	@Column(nullable = false)
 	@NotNull(message = "el valor no puede faltar")
 	private BigDecimal value;
@@ -66,6 +70,14 @@ public class Statistic {
 
 	public void setSubject(String subject) {
 		this.subject = subject;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 	public BigDecimal getValue() {

@@ -10,7 +10,7 @@ public final class EmailUtils {
 
 	public static Email activationEmail(String recipient, String token) {
 		// NOTE - set correct link when known
-		String activationLink = "http://localhost:8080/api/anon/user?activationToken=" + token;
+		String activationLink = "http://192.168.0.10:3000/activate/" + token;
 
 		return new Email.Builder()
 				.withRecipient(recipient)

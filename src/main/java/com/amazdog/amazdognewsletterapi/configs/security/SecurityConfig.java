@@ -18,7 +18,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+import org.springframework.security.oauth2.server.resource.web.DefaultBearerTokenResolver;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 public class SecurityConfig {
@@ -63,10 +72,12 @@ public class SecurityConfig {
 		// endpoints config
 		httpSecurity.authorizeHttpRequests(auth -> {
 			auth.requestMatchers("/api/anon/user/**").permitAll();
-			auth.requestMatchers("/api/user/**").hasRole("USUARIO");
-			auth.requestMatchers("/api/admin/**").hasRole("ADMIN");
-			auth.requestMatchers("/api/post/**").hasAnyRole("ADMIN, EDITOR");
-			auth.requestMatchers("/api/statistic/**").hasAnyRole("ADMIN, EDITOR");
+			auth.requestMatchers("/api/resources/**").permitAll();
+			auth.requestMatchers("/api/user/**").hasAnyRole("ADMINISTRADOR", "EDITOR", "USUARIO");
+			auth.requestMatchers("/api/admin/**").hasRole("ADMINISTRADOR");
+			auth.requestMatchers("/api/charts/**").hasAnyRole("ADMINISTRADOR", "EDITOR");
+			auth.requestMatchers("/api/news/**").hasAnyRole("ADMINISTRADOR", "EDITOR");
+			auth.requestMatchers("/api/statistics/**").hasAnyRole("ADMINISTRADOR", "EDITOR");
 			auth.anyRequest().authenticated();
 		});
 
@@ -78,10 +89,24 @@ public class SecurityConfig {
 		});
 
 		httpSecurity.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
 		httpSecurity.csrf(AbstractHttpConfigurer::disable);
-
+		httpSecurity.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource()));
 		return httpSecurity.build();
+	}
+
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(
+				Arrays.asList("http://192.168.0.10:3000", "http://localhost:3000"));
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+		configuration.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));
+		configuration.setExposedHeaders(Arrays.asList("Content-Type", "Authorization"));
+
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+
+		return source;
 	}
 
 	@Bean

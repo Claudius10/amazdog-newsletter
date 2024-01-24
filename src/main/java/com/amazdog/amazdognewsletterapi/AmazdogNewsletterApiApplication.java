@@ -1,15 +1,14 @@
 package com.amazdog.amazdognewsletterapi;
 
 import com.amazdog.amazdognewsletterapi.entities.dtos.RegisterDTO;
-import com.amazdog.amazdognewsletterapi.entities.user.Role;
 import com.amazdog.amazdognewsletterapi.services.role.RoleService;
 import com.amazdog.amazdognewsletterapi.services.users.UserService;
+import jakarta.persistence.NoResultException;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
-import java.util.Optional;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 @SpringBootApplication
 public class AmazdogNewsletterApiApplication {
@@ -21,10 +20,11 @@ public class AmazdogNewsletterApiApplication {
 	@Bean
 	CommandLineRunner run(RoleService roleService, UserService userService) {
 		return args -> {
-			Optional<Role> userRole = roleService.findByName("ADMIN");
-			if (userRole.isEmpty()) {
-				roleService.create("ADMIN");
+			try {
+				roleService.findByName("ADMINISTRADOR");
+			} catch (EmptyResultDataAccessException ex) {
 				roleService.create("USUARIO");
+				roleService.create("ADMINISTRADOR");
 				roleService.create("EDITOR");
 				userService.create(new RegisterDTO(
 						"Clau",
@@ -32,6 +32,8 @@ public class AmazdogNewsletterApiApplication {
 						"zotacfl@gmail.com",
 						"password",
 						"password"));
+				userService.updateUserRole(1L, "ADMINISTRADOR", true);
+				userService.updateUserRole(1L, "USUARIO", false);
 			}
 		};
 	}

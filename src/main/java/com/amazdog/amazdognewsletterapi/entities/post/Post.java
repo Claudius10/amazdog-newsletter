@@ -48,6 +48,9 @@ public class Post {
 	@Column
 	private String link;
 
+	@Column
+	private boolean active;
+
 	public Post() {
 	}
 
@@ -121,5 +124,13 @@ public class Post {
 
 	public void setLink(String link) {
 		this.link = link;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 }

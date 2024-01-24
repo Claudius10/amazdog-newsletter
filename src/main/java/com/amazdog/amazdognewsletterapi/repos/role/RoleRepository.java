@@ -1,13 +1,10 @@
 package com.amazdog.amazdognewsletterapi.repos.role;
 
 import com.amazdog.amazdognewsletterapi.entities.user.Role;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+public interface RoleRepository {
 
-@Repository
-public interface RoleRepository extends JpaRepository<Role, Long> {
+	void create(Role role);
 
-	Optional<Role> findByName(String name);
+	Role findByName(String name);
 }

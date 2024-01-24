@@ -41,4 +41,6 @@ public class AdminController {
 			 @RequestParam boolean add) {
 		return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserRole(userId, roleName, add));
 	}
+
+	// delete user account and data
 }

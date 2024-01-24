@@ -5,8 +5,6 @@ import com.amazdog.amazdognewsletterapi.repos.role.RoleRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @Transactional
 public class RoleServiceImpl implements RoleService {
@@ -19,11 +17,11 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public void create(String roleName) {
-		roleRepository.save(new Role(roleName));
+		roleRepository.create(new Role(roleName));
 	}
 
 	@Override
-	public Optional<Role> findByName(String roleName) {
+	public Role findByName(String roleName) {
 		return roleRepository.findByName(roleName);
 	}
 }

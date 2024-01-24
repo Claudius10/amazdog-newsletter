@@ -23,7 +23,7 @@ public class AnonUserController {
 		this.userMailSender = userMailSender;
 	}
 
-	@PostMapping
+	@PostMapping("/register")
 	public ResponseEntity<String> registerUser(@RequestBody @Valid RegisterDTO registerDTO) {
 		try {
 			userService.create(registerDTO);
@@ -33,9 +33,9 @@ public class AnonUserController {
 		return ResponseEntity.status(HttpStatus.OK).body("Usuario registrado con éxito");
 	}
 
-	@PostMapping(params = "activationToken")
-	public ResponseEntity<String> activateUserAccount(@RequestParam String activationToken) {
-		return ResponseEntity.status(HttpStatus.OK).body(userService.activateAccount(activationToken));
+	@PostMapping(path = "activate", params = "token")
+	public ResponseEntity<String> activateUserAccount(@RequestParam String token) {
+		return ResponseEntity.status(HttpStatus.OK).body(userService.activateAccount(token));
 	}
 
 	@PostMapping(path = "/password", params = "resetFor")
@@ -51,5 +51,4 @@ public class AnonUserController {
 		userService.passwordReset(resetToken, passwordResetDTO);
 		return ResponseEntity.status(HttpStatus.OK).body("Contraseña cambiada con éxito");
 	}
-
 }
