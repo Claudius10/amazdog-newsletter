@@ -3,6 +3,7 @@ package com.amazdog.amazdognewsletterapi.controllers.user;
 import com.amazdog.amazdognewsletterapi.entities.dtos.EmailChangeDTO;
 import com.amazdog.amazdognewsletterapi.entities.dtos.NameChangeDTO;
 import com.amazdog.amazdognewsletterapi.entities.dtos.PasswordChangeDTO;
+import com.amazdog.amazdognewsletterapi.entities.dtos.PasswordDTO;
 import com.amazdog.amazdognewsletterapi.services.users.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -44,11 +45,11 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.OK).body("Contraseña actualizada con éxito");
 	}
 
-	@DeleteMapping(params = {"userId", "password"})
+	@DeleteMapping(params = {"userId"})
 	public ResponseEntity<String> deleteUserAccount
 			(@RequestParam Long userId,
-			 @RequestParam String password) {
-		userService.deleteAccount(userId, password);
+			 @Valid @RequestBody PasswordDTO passwordDTO) {
+		userService.deleteAccount(userId, passwordDTO.password());
 		return ResponseEntity.status(HttpStatus.OK).body("Cuenta borrada con éxito");
 	}
 }
