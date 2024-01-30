@@ -21,7 +21,7 @@ public final class EmailUtils {
 
 	public static Email pwResetEmail(String recipient, String token) {
 		// NOTE - set correct link when known
-		String resetPwLink = "http://localhost:8080/api/anon/user/password?resetToken=" + token;
+		String resetPwLink = "http://192.168.0.10:3000/password-reset/" + token;
 
 		return new Email.Builder()
 				.withRecipient(recipient)

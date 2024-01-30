@@ -1,6 +1,6 @@
 package com.amazdog.amazdognewsletterapi.repos.charts;
 
-import com.amazdog.amazdognewsletterapi.entities.chart.Chart;
+import com.amazdog.amazdognewsletterapi.entities.dtos.chart.Chart;
 import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 

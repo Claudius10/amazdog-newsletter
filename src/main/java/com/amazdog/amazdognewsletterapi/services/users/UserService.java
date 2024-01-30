@@ -40,4 +40,5 @@ public interface UserService {
 
 	String loadPassword(Long userId);
 
+	boolean existsByEmail(String email);
 }

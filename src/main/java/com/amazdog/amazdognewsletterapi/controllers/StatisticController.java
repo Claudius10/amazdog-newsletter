@@ -28,7 +28,7 @@ public class StatisticController {
 	@PostMapping()
 	public ResponseEntity<String> createStatistic(@RequestBody @Valid Statistic statistic) {
 		statisticService.create(statistic);
-		return ResponseEntity.status(HttpStatus.OK).body("Dato estadístico creado con éxito");
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
 	@GetMapping("/{id}")

@@ -38,6 +38,11 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
+	public Post findByIdAndActiveIsTrue(Long id) {
+		return postRepository.findByIdAndActiveIsTrue(id);
+	}
+
+	@Override
 	public Optional<Post> findById(Long id) {
 		return postRepository.findById(id);
 	}

@@ -15,6 +15,8 @@ public interface PostService {
 
 	List<Post> findAllByActiveIsTrue();
 
+	Post findByIdAndActiveIsTrue(Long id);
+
 	Optional<Post> findById(Long id);
 
 	void updateState(Long id, boolean active);

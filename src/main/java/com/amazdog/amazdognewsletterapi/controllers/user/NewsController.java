@@ -42,13 +42,13 @@ public class NewsController {
 	@PostMapping
 	public ResponseEntity<String> createPost(@RequestBody @Valid Post post) {
 		postService.create(post);
-		return ResponseEntity.status(HttpStatus.OK).body("Post creado con éxito");
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
 	@PutMapping("/{id}/{state}")
 	public ResponseEntity<?> updateState(@PathVariable Long id, @PathVariable boolean state) {
 		postService.updateState(id, state);
-		return ResponseEntity.status(HttpStatus.OK).body("Post creado con éxito");
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
 	@DeleteMapping("/{id}")

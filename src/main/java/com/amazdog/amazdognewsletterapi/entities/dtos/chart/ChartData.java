@@ -1,4 +1,4 @@
-package com.amazdog.amazdognewsletterapi.entities.chart;
+package com.amazdog.amazdognewsletterapi.entities.dtos.chart;
 
 import com.amazdog.amazdognewsletterapi.entities.Statistic;
 

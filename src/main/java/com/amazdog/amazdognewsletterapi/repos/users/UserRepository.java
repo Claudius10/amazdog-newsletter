@@ -34,4 +34,6 @@ public interface UserRepository extends JpaRepository<User, Long>, CustomUserRep
 
 	@Query("select user.password from User user where user.id = :userId")
 	String loadPassword(Long userId);
+
+	boolean existsByEmail(String email);
 }

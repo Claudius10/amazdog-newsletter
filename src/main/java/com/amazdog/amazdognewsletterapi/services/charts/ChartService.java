@@ -1,8 +1,7 @@
 package com.amazdog.amazdognewsletterapi.services.charts;
 
-import com.amazdog.amazdognewsletterapi.entities.chart.Chart;
-import com.amazdog.amazdognewsletterapi.entities.chart.ChartData;
-import com.amazdog.amazdognewsletterapi.entities.chart.Subject;
+import com.amazdog.amazdognewsletterapi.entities.dtos.chart.Chart;
+import com.amazdog.amazdognewsletterapi.entities.dtos.chart.ChartData;
 
 import java.util.List;
 
@@ -15,8 +14,4 @@ public interface ChartService {
 	List<ChartData> getChartData();
 
 	void remove(Long chartId);
-
-	void addSubject(Long chartId, Subject subject);
-
-	void removeSubject(Long chartId, Subject subject);
 }

@@ -171,6 +171,11 @@ public class UserServiceImpl implements UserService {
 		return userRepository.loadPassword(userId);
 	}
 
+	@Override
+	public boolean existsByEmail(String email) {
+		return userRepository.existsByEmail(email);
+	}
+
 	private void verifyPassword(Long userId, String password) {
 		if (!bCryptEncoder.matches(password, loadPassword(userId))) {
 			throw new InvalidPasswordException("La contraseña proporcionada no coincide con la contraseña almacenada");

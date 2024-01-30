@@ -21,4 +21,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	void updateState(Long id, boolean active);
 
 	List<Post> findAllByActiveIsTrue();
+
+	Post findByIdAndActiveIsTrue(Long id);
 }

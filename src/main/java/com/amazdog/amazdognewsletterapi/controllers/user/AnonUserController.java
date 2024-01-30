@@ -40,15 +40,19 @@ public class AnonUserController {
 
 	@PostMapping(path = "/password", params = "resetFor")
 	public ResponseEntity<String> requestPwReset(@RequestParam String resetFor) {
-		userMailSender.sendPwResetEmail(resetFor);
-		return ResponseEntity.status(HttpStatus.OK).body("Siga el enlace recibido en su email para cambiar la contraseña");
+		boolean emailExists = userService.existsByEmail(resetFor);
+		if (emailExists) {
+			userMailSender.sendPwResetEmail(resetFor);
+			return ResponseEntity.status(HttpStatus.OK).build();
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El correo electrónico proporcionado no existe en la base de " +
+					"datos");
+		}
 	}
 
 	@PostMapping(path = "/password", params = "resetToken")
-	public ResponseEntity<String> resetUserPw
-			(@RequestParam String resetToken,
-			 @RequestBody @Valid PasswordResetDTO passwordResetDTO) {
+	public ResponseEntity<String> resetUserPw(@RequestParam String resetToken, @RequestBody @Valid PasswordResetDTO passwordResetDTO) {
 		userService.passwordReset(resetToken, passwordResetDTO);
-		return ResponseEntity.status(HttpStatus.OK).body("Contraseña cambiada con éxito");
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 }

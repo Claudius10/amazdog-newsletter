@@ -26,7 +26,7 @@ public class UserController {
 			(@RequestParam Long userId,
 			 @RequestBody @Valid NameChangeDTO nameChangeDTO) {
 		userService.updateName(userId, nameChangeDTO);
-		return ResponseEntity.status(HttpStatus.OK).body("Nombre de cuenta actualizado con éxito");
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
 	@PutMapping(path = "/email", params = {"userId"})
@@ -34,7 +34,7 @@ public class UserController {
 			(@RequestParam Long userId,
 			 @RequestBody @Valid EmailChangeDTO emailChangeDTO) {
 		userService.updateEmail(userId, emailChangeDTO);
-		return ResponseEntity.status(HttpStatus.OK).body("Email de cuenta actualizado con éxito");
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
 	@PutMapping(path = "/password", params = {"userId"})
@@ -42,7 +42,7 @@ public class UserController {
 			(@RequestParam Long userId,
 			 @RequestBody @Valid PasswordChangeDTO passwordChangeDTO) {
 		userService.updatePassword(userId, passwordChangeDTO);
-		return ResponseEntity.status(HttpStatus.OK).body("Contraseña actualizada con éxito");
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
 	@DeleteMapping(params = {"userId"})
@@ -50,6 +50,6 @@ public class UserController {
 			(@RequestParam Long userId,
 			 @Valid @RequestBody PasswordDTO passwordDTO) {
 		userService.deleteAccount(userId, passwordDTO.password());
-		return ResponseEntity.status(HttpStatus.OK).body("Cuenta borrada con éxito");
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 }

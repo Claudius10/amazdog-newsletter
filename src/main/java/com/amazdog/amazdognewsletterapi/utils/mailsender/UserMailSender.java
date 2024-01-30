@@ -20,7 +20,6 @@ public class UserMailSender {
 
 	private final TokenUtils tokenUtils;
 
-
 	public UserMailSender(JavaMailSender javaMailSender, TokenServiceImpl tokenService, TokenUtils tokenUtils) {
 		this.javaMailSender = javaMailSender;
 		this.tokenService = tokenService;

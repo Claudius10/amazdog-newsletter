@@ -31,7 +31,7 @@ public class ValidAuthHandler implements AuthenticationSuccessHandler {
 
 		User user = (User) authentication.getPrincipal();
 
-		Instant expiry = Instant.now().plus(5, ChronoUnit.MINUTES); // NOTE - set correct expiry for prod
+		Instant expiry = Instant.now().plus(1, ChronoUnit.DAYS); // NOTE - set correct expiry for prod
 		String accessToken = tokenUtils.createToken(
 				expiry,
 				user.getUsername(),

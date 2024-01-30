@@ -1,19 +1,16 @@
 package com.amazdog.amazdognewsletterapi.services.charts;
 
 import com.amazdog.amazdognewsletterapi.entities.Statistic;
-import com.amazdog.amazdognewsletterapi.entities.chart.Chart;
-import com.amazdog.amazdognewsletterapi.entities.chart.ChartData;
-import com.amazdog.amazdognewsletterapi.entities.chart.Subject;
+import com.amazdog.amazdognewsletterapi.entities.dtos.chart.Chart;
+import com.amazdog.amazdognewsletterapi.entities.dtos.chart.ChartData;
+import com.amazdog.amazdognewsletterapi.entities.dtos.chart.Subject;
 import com.amazdog.amazdognewsletterapi.repos.charts.ChartRepository;
 import com.amazdog.amazdognewsletterapi.services.statistics.StatisticService;
 import jakarta.transaction.Transactional;
-import org.checkerframework.checker.units.qual.A;
-import org.checkerframework.checker.units.qual.C;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -58,17 +55,5 @@ public class ChartServiceImpl implements ChartService {
 	@Override
 	public void remove(Long chartId) {
 		chartRepository.deleteById(chartId);
-	}
-
-	@Override
-	public void addSubject(Long chartId, Subject subject) {
-		Optional<Chart> chart = chartRepository.findById(chartId);
-		chart.ifPresent(theChart -> theChart.getSubjects().add(subject));
-	}
-
-	@Override
-	public void removeSubject(Long chartId, Subject subject) {
-		Optional<Chart> chart = chartRepository.findById(chartId);
-		chart.ifPresent(theChart -> theChart.getSubjects().remove(subject));
 	}
 }

@@ -1,3 +1,6 @@
+EMAIL_APP: ${EMAIL_APP_NAME}
+EMAIL_APP_PW: ${EMAIL_APP_PASSWORD}
+
 spring:
   datasource:
     url: ${DATABASE_URL}
@@ -19,7 +22,7 @@ spring:
     properties:
       hibernate:
         jdbc:
-            time_zone: UTC
+          time_zone: UTC
         show_sql: true
         format_sql: true
 
@@ -37,7 +40,7 @@ spring:
       enabled: false
 
   config:
-   import: optional:file:local.env[.properties]
+    import: optional:file:local.env[.properties]
 
 logging:
   level:
@@ -46,5 +49,5 @@ logging:
     org.hibernate.sql: debug
     org.hibernate.orm.jdbc.bind: trace
 
-#server:
+  #server:
   #port: ${PORT}
