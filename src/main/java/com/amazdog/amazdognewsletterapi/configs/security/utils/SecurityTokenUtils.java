@@ -20,7 +20,7 @@ public class SecurityTokenUtils {
 
 	public String createToken(Instant expiry, String username, Long userId, Collection<? extends GrantedAuthority> authorities) {
 		JwtClaimsSet claims = JwtClaimsSet.builder()
-				.issuer("issuer to be set when known") // NOTE set issuer when known
+				.issuer("news@amazdog.com")
 				.issuedAt(Instant.now())
 				.expiresAt(expiry)
 				.subject(username)

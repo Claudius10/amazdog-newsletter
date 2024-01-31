@@ -2,8 +2,8 @@ package com.amazdog.amazdognewsletterapi.configs.security.login;
 
 import com.amazdog.amazdognewsletterapi.configs.security.utils.SecurityTokenUtils;
 import com.amazdog.amazdognewsletterapi.entities.user.User;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
+import com.nimbusds.jose.shaded.gson.JsonObject;
+import com.nimbusds.jose.shaded.gson.JsonPrimitive;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
@@ -31,7 +31,7 @@ public class ValidAuthHandler implements AuthenticationSuccessHandler {
 
 		User user = (User) authentication.getPrincipal();
 
-		Instant expiry = Instant.now().plus(1, ChronoUnit.DAYS); // NOTE - set correct expiry for prod
+		Instant expiry = Instant.now().plus(1, ChronoUnit.DAYS);
 		String accessToken = tokenUtils.createToken(
 				expiry,
 				user.getUsername(),

@@ -30,7 +30,7 @@ public interface UserService {
 
 	Optional<User> findById(Long id);
 
-	Optional<UserDTO> findDTOByEmail(String email);
+	Optional<UserFEDTO> findDTOByEmail(String email);
 
 	List<UserDTO> findAllDTOByRole(String roleName);
 

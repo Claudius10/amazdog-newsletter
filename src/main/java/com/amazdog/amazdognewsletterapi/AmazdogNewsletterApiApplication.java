@@ -3,7 +3,6 @@ package com.amazdog.amazdognewsletterapi;
 import com.amazdog.amazdognewsletterapi.entities.dtos.RegisterDTO;
 import com.amazdog.amazdognewsletterapi.services.role.RoleService;
 import com.amazdog.amazdognewsletterapi.services.users.UserService;
-import jakarta.persistence.NoResultException;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,9 +26,9 @@ public class AmazdogNewsletterApiApplication {
 				roleService.create("ADMINISTRADOR");
 				roleService.create("EDITOR");
 				userService.create(new RegisterDTO(
-						"Clau",
-						"zotacfl@gmail.com",
-						"zotacfl@gmail.com",
+						"Claudio",
+						"bclaudiuc@gmail.com",
+						"bclaudiuc@gmail.com",
 						"password",
 						"password"));
 				userService.updateUserRole(1L, "ADMINISTRADOR", true);

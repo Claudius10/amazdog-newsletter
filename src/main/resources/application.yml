@@ -7,13 +7,6 @@ spring:
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
 
-  cloud:
-    gcp:
-      sql:
-        enabled: false
-        #database-name: amazdog_newsletter
-        #instance-connection-name: generated-mote-405209:europe-west1:amazdog-newsletter-mysql
-
   sql:
     init:
       mode: always

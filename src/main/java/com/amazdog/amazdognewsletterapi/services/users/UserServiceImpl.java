@@ -129,7 +129,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Optional<UserDTO> findDTOByEmail(String email) {
+	public Optional<UserFEDTO> findDTOByEmail(String email) {
 		return userRepository.findDTOByEmail(email);
 	}
 
@@ -148,16 +148,20 @@ public class UserServiceImpl implements UserService {
 				// check if user already has the role
 				for (Role theRole : user.get().getAuthorities()) {
 					if (theRole.getAuthority().equals(roleName)) {
-						return "El usuario con email " + user.get().getUsername() + " ya posee el privilegio '" + roleName + "'";
+						return "El usuario " + user.get().getUsername() + " ya posee el privilegio '" + roleName + "'";
 					}
 				}
 				// add the role if it doesn't
 				user.get().getAuthorities().add(role);
 				return "Privilegio '" + roleName + "' añadido con éxito para " + user.get().getUsername();
 			} else {
-				// remove the role
-				user.get().getAuthorities().remove(role);
-				return "Privilegio '" + roleName + "' eliminado con éxito para " + user.get().getUsername();
+				if (!user.get().getAuthorities().contains(new Role(roleName))) {
+					return "El usuario " + user.get().getUsername() + " no posee el privilegio '" + roleName + "'";
+				} else {
+					// remove the role
+					user.get().getAuthorities().remove(role);
+					return "Privilegio '" + roleName + "' eliminado con éxito para " + user.get().getUsername();
+				}
 			}
 		} else {
 			return "No se encontró el usuario con id " + userId;
