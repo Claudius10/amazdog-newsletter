@@ -94,7 +94,7 @@ public class SecurityConfig {
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(
-				Arrays.asList("https://amazdog-newsletter-fe-production.up.railway.app/", "http://192.168.0.10:3000", "http://localhost:3000"));
+				Arrays.asList("https://amazdog-newsletter-fe-production.up.railway.app", "http://192.168.0.10:3000", "http://localhost:3000"));
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
 		configuration.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));
 		configuration.setExposedHeaders(Arrays.asList("Content-Type", "Authorization"));
