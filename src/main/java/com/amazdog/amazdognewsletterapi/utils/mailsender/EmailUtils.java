@@ -9,8 +9,7 @@ public final class EmailUtils {
 	}
 
 	public static Email activationEmail(String recipient, String token) {
-		// NOTE - set correct link when known
-		String activationLink = "http://192.168.0.10:3000/activate/" + token;
+		String activationLink = "https://amazdog-newsletter-fe-production.up.railway.app/activate/" + token;
 
 		return new Email.Builder()
 				.withRecipient(recipient)
@@ -20,8 +19,7 @@ public final class EmailUtils {
 	}
 
 	public static Email pwResetEmail(String recipient, String token) {
-		// NOTE - set correct link when known
-		String resetPwLink = "http://192.168.0.10:3000/password-reset/" + token;
+		String resetPwLink = "https://amazdog-newsletter-fe-production.up.railway.app/password-reset/" + token;
 
 		return new Email.Builder()
 				.withRecipient(recipient)
