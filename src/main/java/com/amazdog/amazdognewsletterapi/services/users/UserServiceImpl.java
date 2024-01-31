@@ -164,6 +164,16 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	@Override
+	public void desactivateAccount(String email) {
+		userRepository.desactivateAccount(email);
+	}
+
+	@Override
+	public void reenableAccount(String email) {
+		userRepository.enableAccount(email);
+	}
+
 	// info - util method
 
 	@Override

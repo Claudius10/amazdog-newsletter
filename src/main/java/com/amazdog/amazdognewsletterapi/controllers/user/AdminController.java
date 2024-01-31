@@ -34,7 +34,7 @@ public class AdminController {
 		}
 	}
 
-	@PutMapping()
+	@PutMapping(params = {"userId", "roleName", "add"})
 	public ResponseEntity<String> updateUserRole
 			(@RequestParam Long userId,
 			 @RequestParam String roleName,
@@ -42,5 +42,15 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.OK).body(userService.updateUserRole(userId, roleName, add));
 	}
 
-	// delete user account and data
+	@PutMapping(params = {"userEmail"})
+	public ResponseEntity<?> enableAccount(@RequestParam String userEmail) {
+		userService.reenableAccount(userEmail);
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
+
+	@PutMapping(params = {"userEmail"})
+	public ResponseEntity<?> disableAccount(@RequestParam String userEmail) {
+		userService.desactivateAccount(userEmail);
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
 }

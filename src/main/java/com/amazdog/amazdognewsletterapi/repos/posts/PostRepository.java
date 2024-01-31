@@ -20,7 +20,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	@Query("update Post post set post.active = :active where post.id = :id")
 	void updateState(Long id, boolean active);
 
-	List<Post> findAllByActiveIsTrue();
+	@Query("select p from Post p where p.active = true")
+	List<Post> findAllActiveNews();
 
-	Post findByIdAndActiveIsTrue(Long id);
+	@Query("select p from Post p where p.active = true and p.id = :id")
+	Post findActiveNews(Long id);
 }

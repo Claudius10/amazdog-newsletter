@@ -27,6 +27,10 @@ public interface UserRepository extends JpaRepository<User, Long>, CustomUserRep
 	void enableAccount(String email);
 
 	@Modifying
+	@Query("update User user set user.isEnabled = false where user.email = :email")
+	void desactivateAccount(String email);
+
+	@Modifying
 	@Query("update User user set user.password = :password where user.email = :email")
 	void resetPassword(String email, String password);
 

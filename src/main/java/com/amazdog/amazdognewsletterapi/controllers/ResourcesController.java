@@ -51,6 +51,6 @@ public class ResourcesController {
 
 	@GetMapping("/news/active/{id}")
 	public ResponseEntity<Post> findActiveNewsById(@PathVariable Long id) {
-		return ResponseEntity.status(HttpStatus.OK).body(postService.findByIdAndActiveIsTrue(id));
+		return ResponseEntity.status(HttpStatus.OK).body(postService.findActiveNews(id));
 	}
 }

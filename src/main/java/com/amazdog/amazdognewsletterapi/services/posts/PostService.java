@@ -15,7 +15,7 @@ public interface PostService {
 
 	List<Post> findAllByActiveIsTrue();
 
-	Post findByIdAndActiveIsTrue(Long id);
+	Post findActiveNews(Long id);
 
 	Optional<Post> findById(Long id);
 

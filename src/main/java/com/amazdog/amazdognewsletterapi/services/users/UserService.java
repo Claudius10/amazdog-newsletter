@@ -36,6 +36,10 @@ public interface UserService {
 
 	String updateUserRole(Long userId, String roleName, boolean add);
 
+	void reenableAccount(String email);
+
+	void desactivateAccount(String email);
+
 	// info - util method
 
 	String loadPassword(Long userId);

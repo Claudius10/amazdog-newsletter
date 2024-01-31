@@ -34,12 +34,12 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public List<Post> findAllByActiveIsTrue() {
-		return postRepository.findAllByActiveIsTrue();
+		return postRepository.findAllActiveNews();
 	}
 
 	@Override
-	public Post findByIdAndActiveIsTrue(Long id) {
-		return postRepository.findByIdAndActiveIsTrue(id);
+	public Post findActiveNews(Long id) {
+		return postRepository.findActiveNews(id);
 	}
 
 	@Override
