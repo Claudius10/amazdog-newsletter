@@ -33,7 +33,7 @@ public class Statistic {
 	private BigDecimal value;
 
 	@Column(nullable = false)
-	@JsonFormat(pattern = "yyyy")
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	@Past(message = "la fecha debe ser en el pasado, no presente o futuro")
 	private LocalDate date;
 
