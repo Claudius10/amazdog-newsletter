@@ -28,7 +28,7 @@ public class Statistic {
 	@Size(min = 1, max = 255, message = "la longitud debe estar entre 1 y 255 caracteres")
 	private String label;
 
-	@Column(nullable = false)
+	@Column(nullable = false, precision = 38, scale = 3)
 	@NotNull(message = "el valor no puede faltar")
 	private BigDecimal value;
 
