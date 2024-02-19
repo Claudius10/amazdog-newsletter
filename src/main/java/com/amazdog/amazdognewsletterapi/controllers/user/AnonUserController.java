@@ -4,11 +4,16 @@ import com.amazdog.amazdognewsletterapi.entities.dtos.PasswordResetDTO;
 import com.amazdog.amazdognewsletterapi.entities.dtos.RegisterDTO;
 import com.amazdog.amazdognewsletterapi.services.users.UserService;
 import com.amazdog.amazdognewsletterapi.utils.mailsender.UserMailSender;
+import com.amazdog.amazdognewsletterapi.validation.ApiErrorDTO;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.Collections;
 
 @RestController
 @RequestMapping("/api/anon/user")
@@ -24,12 +29,17 @@ public class AnonUserController {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<String> registerUser(@RequestBody @Valid RegisterDTO registerDTO) {
+	public ResponseEntity<?> registerUser(@RequestBody @Valid RegisterDTO registerDTO, HttpServletRequest request) {
 		try {
 			userService.create(registerDTO);
 		} catch (DataIntegrityViolationException ex) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Una cuenta ya existe con el correo electrónico " + registerDTO.email());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiErrorDTO.Builder(LocalDateTime.now().toString())
+					.withStatusCode(HttpStatus.BAD_REQUEST.value())
+					.withPath(request.getServletPath())
+					.withErrorMsg(Collections.singletonList("Una cuenta ya existe con el correo electrónico " + registerDTO.email() + " . Restablezca la contraseña si no la recuerda."))
+					.build());
 		}
+
 		return ResponseEntity.status(HttpStatus.OK).body("Usuario registrado con éxito");
 	}
 

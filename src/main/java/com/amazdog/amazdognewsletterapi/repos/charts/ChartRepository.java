@@ -1,6 +1,6 @@
 package com.amazdog.amazdognewsletterapi.repos.charts;
 
-import com.amazdog.amazdognewsletterapi.entities.dtos.chart.Chart;
+import com.amazdog.amazdognewsletterapi.entities.chart.Chart;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,8 +1,8 @@
 package com.amazdog.amazdognewsletterapi.controllers;
 
 import com.amazdog.amazdognewsletterapi.entities.Statistic;
-import com.amazdog.amazdognewsletterapi.entities.dtos.chart.Chart;
-import com.amazdog.amazdognewsletterapi.entities.dtos.chart.ChartData;
+import com.amazdog.amazdognewsletterapi.entities.chart.Chart;
+import com.amazdog.amazdognewsletterapi.entities.chart.ChartData;
 import com.amazdog.amazdognewsletterapi.entities.post.Post;
 import com.amazdog.amazdognewsletterapi.services.charts.ChartService;
 import com.amazdog.amazdognewsletterapi.services.posts.PostService;

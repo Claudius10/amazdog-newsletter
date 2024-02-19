@@ -1,9 +1,9 @@
 package com.amazdog.amazdognewsletterapi.services.charts;
 
 import com.amazdog.amazdognewsletterapi.entities.Statistic;
-import com.amazdog.amazdognewsletterapi.entities.dtos.chart.Chart;
-import com.amazdog.amazdognewsletterapi.entities.dtos.chart.ChartData;
-import com.amazdog.amazdognewsletterapi.entities.dtos.chart.Subject;
+import com.amazdog.amazdognewsletterapi.entities.chart.Chart;
+import com.amazdog.amazdognewsletterapi.entities.chart.ChartData;
+import com.amazdog.amazdognewsletterapi.entities.chart.Subject;
 import com.amazdog.amazdognewsletterapi.repos.charts.ChartRepository;
 import com.amazdog.amazdognewsletterapi.services.statistics.StatisticService;
 import jakarta.transaction.Transactional;

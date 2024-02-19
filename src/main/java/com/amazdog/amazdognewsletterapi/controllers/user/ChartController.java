@@ -1,6 +1,6 @@
 package com.amazdog.amazdognewsletterapi.controllers.user;
 
-import com.amazdog.amazdognewsletterapi.entities.dtos.chart.Chart;
+import com.amazdog.amazdognewsletterapi.entities.chart.Chart;
 import com.amazdog.amazdognewsletterapi.services.charts.ChartService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

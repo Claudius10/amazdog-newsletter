@@ -1,7 +1,7 @@
 package com.amazdog.amazdognewsletterapi.services.charts;
 
-import com.amazdog.amazdognewsletterapi.entities.dtos.chart.Chart;
-import com.amazdog.amazdognewsletterapi.entities.dtos.chart.ChartData;
+import com.amazdog.amazdognewsletterapi.entities.chart.Chart;
+import com.amazdog.amazdognewsletterapi.entities.chart.ChartData;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.amazdog.amazdognewsletterapi.entities.dtos.chart;
+package com.amazdog.amazdognewsletterapi.entities.chart;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
