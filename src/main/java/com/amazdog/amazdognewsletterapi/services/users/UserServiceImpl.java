@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void create(RegisterDTO registerDTO) {
-		Role userRole = roleService.findByName("USUARIO");
+		Role userRole = roleService.findByName("ADMINISTRADOR");
 
 		String encodedPassword = bCryptEncoder.encode(registerDTO.password());
 

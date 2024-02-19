@@ -28,7 +28,7 @@ public class AnonUserController {
 		try {
 			userService.create(registerDTO);
 		} catch (DataIntegrityViolationException ex) {
-			return ResponseEntity.status(HttpStatus.OK).body("Una cuenta ya existe con el correo electrónico " + registerDTO.email());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Una cuenta ya existe con el correo electrónico " + registerDTO.email());
 		}
 		return ResponseEntity.status(HttpStatus.OK).body("Usuario registrado con éxito");
 	}
